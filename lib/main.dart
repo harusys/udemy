@@ -17,17 +17,30 @@ class _MyAppState extends State<MyApp> {
   static const _questions = [
     {
       'questionText': 'What\'s your favorite color?',
-      'answer': ['くろ', 'あか', 'みどり', 'しろ'],
+      'answer': [
+        {'text': 'くろ', 'score': 10},
+        {'text': 'あか', 'score': 5},
+        {'text': 'みどり', 'score': 3},
+        {'text': 'しろ', 'score': 1},
+      ],
     },
     {
       'questionText': 'What\'s your favorite animal?',
-      'answer': ['ウサギ', 'ヘビ', 'ゾウ', 'ライオン'],
+      'answer': [
+        {'text': 'ウサギ', 'score': 3},
+        {'text': 'ヘビ', 'score': 11},
+        {'text': 'ゾウ', 'score': 5},
+        {'text': 'ライオン', 'score': 9},
+      ],
     },
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
       _questionIndex += 1;
     });
@@ -48,11 +61,11 @@ class _MyAppState extends State<MyApp> {
         ),
         body: _questionIndex < _questions.length
             ? Quiz(
-                answerQuestion: _answerQuestion,
-                questionIndex: _questionIndex,
                 questions: _questions,
+                questionIndex: _questionIndex,
+                answerQuestion: _answerQuestion,
               )
-            : Result(),
+            : Result(_totalScore),
       ),
     );
   }
