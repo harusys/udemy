@@ -20,22 +20,20 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          // Card 配下の Text を Container でラップする（Card は子ウィジェットの大きさに依存）
-          Card(
-            color: Colors.blue,
-            child: Container(
-              width: double.infinity,
-              child: Text('CHART!'),
-            ),
-            elevation: 5,
-          ),
-          // Card を Container でラップする
           Container(
-            width: double.infinity,
+            // width: double.infinity, // stretch があるためなくても同じ挙動になる
             child: Card(
-              child: Text('LIST OF TX'),
+              color: Colors.blue,
+              child: Text('CHART!'),
+              elevation: 5,
             ),
+          ),
+          Card(
+            color: Colors.red,
+            child: Text('LIST OF TX'),
           ),
         ],
       ),
