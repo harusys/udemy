@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -70,7 +71,7 @@ class MyHomePage extends StatelessWidget {
                           // 罫線の内側に空白を作る
                           padding: EdgeInsets.all(10),
                           child: Text(
-                            tx.amount.toString(),
+                            '\$${tx.amount.toString()}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -90,7 +91,7 @@ class MyHomePage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              tx.date.toString(),
+                              DateFormat.yMMMMd().format(tx.date),
                               style: TextStyle(
                                 color: Colors.grey,
                               ),
