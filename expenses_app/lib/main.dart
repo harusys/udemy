@@ -62,19 +62,39 @@ class MyHomePage extends StatelessWidget {
                           ),
                           // 罫線を引く
                           decoration: BoxDecoration(
-                              border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          )),
+                            border: Border.all(
+                              color: Colors.purple,
+                              width: 2,
+                            ),
+                          ),
                           // 罫線の内側に空白を作る
                           padding: EdgeInsets.all(10),
-                          child: Text(tx.amount.toString()),
+                          child: Text(
+                            tx.amount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.purple,
+                            ),
+                          ),
                         ),
                         // カラム（縦）にウィジェットを並べる
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(tx.title),
-                            Text(tx.date.toString()),
+                            Text(
+                              tx.title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              tx.date.toString(),
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
                           ],
                         ),
                       ],
