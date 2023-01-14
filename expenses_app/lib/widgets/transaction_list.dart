@@ -26,7 +26,7 @@ class TransactionList extends StatelessWidget {
                 // 罫線を引く
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.purple,
+                    color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
@@ -37,7 +37,7 @@ class TransactionList extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Colors.purple,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
