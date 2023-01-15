@@ -43,16 +43,27 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: groupedTransactionValues
-            .map((data) => ChartBar(
-                  data['day'] as String,
-                  data['amount'] as double,
-                  totalSpending == 0.0
-                      ? 0.0
-                      : (data['amount'] as double) / totalSpending,
-                ))
-            .toList(),
+      child: Padding(
+        // チャートとリストの間にパディング追加
+        padding: EdgeInsets.all(10),
+        child: Row(
+          // 等間隔で横幅いっぱいに整列させる
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactionValues
+              .map((data) => Flexible(
+                    // 横幅が拡大縮小しないようにする（利用可能なスペースを等分して埋める）
+                    // 例：特定の曜日が合計多い場合に伸びてしまう
+                    fit: FlexFit.tight,
+                    child: ChartBar(
+                      data['day'] as String,
+                      data['amount'] as double,
+                      totalSpending == 0.0
+                          ? 0.0
+                          : (data['amount'] as double) / totalSpending,
+                    ),
+                  ))
+              .toList(),
+        ),
       ),
     );
   }
