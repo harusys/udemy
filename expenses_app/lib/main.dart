@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         // デフォルトテーマ
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
+        // errorColor: Colors.red,
         fontFamily: 'Quicksand',
         // AppBar テーマ
         appBarTheme: AppBarTheme(
@@ -87,6 +88,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   void _startAddNewTransaction(BuildContext ctx) {
     // モーダル画面を表示
     showModalBottomSheet(
@@ -119,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),
