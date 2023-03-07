@@ -8,30 +8,25 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('DeliMeal'),
-      ),
-      body: GridView(
-        padding: const EdgeInsets.all(25),
-        children: DUMMY_CATEGORIES
-            .map(
-              (catData) => CategoryItem(
-                catData.id,
-                catData.title,
-                catData.color,
-              ),
-            )
-            .toList(),
-        // グリッドの構造・レイアウトを定義
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          // アスペクト比 3:2
-          childAspectRatio: 3 / 2,
-          // グリッド間のスペース
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
+    return GridView(
+      padding: const EdgeInsets.all(25),
+      children: DUMMY_CATEGORIES
+          .map(
+            (catData) => CategoryItem(
+              catData.id,
+              catData.title,
+              catData.color,
+            ),
+          )
+          .toList(),
+      // グリッドの構造・レイアウトを定義
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200,
+        // アスペクト比 3:2
+        childAspectRatio: 3 / 2,
+        // グリッド間のスペース
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
       ),
     );
   }
