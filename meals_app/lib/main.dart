@@ -51,6 +51,24 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _toggleFavorite(String mealId) {
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isMealFavorite(String id) {
+    return _favoriteMeals.any((meal) => meal.id == id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -80,7 +98,10 @@ class _MyAppState extends State<MyApp> {
         '/': (ctx) => TabsScreen(favoriteMeals: _favoriteMeals),
         CategoryMealsScreen.routeName: (ctx) =>
             CategoryMealsScreen(availableMeals: _availableMeals),
-        MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
+        MealDetailScreen.routeName: (ctx) => MealDetailScreen(
+              toggleFavorite: _toggleFavorite,
+              isFavorite: _isMealFavorite,
+            ),
         FilterScreen.routeName: (ctx) => FilterScreen(
               currentFilter: _filters,
               saveFilters: _setFilters,
