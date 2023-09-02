@@ -17,7 +17,7 @@ type IUserController interface {
 	LogOut(c echo.Context) error
 }
 
-// 実装クラス
+// 構造体
 type userController struct {
 	uu usecase.IUserUsecase
 }

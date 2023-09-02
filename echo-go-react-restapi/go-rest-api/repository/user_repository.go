@@ -12,7 +12,7 @@ type IUserRepository interface {
 	CreateUser(user *model.User) error
 }
 
-// 実装クラス
+// 構造体
 type userRepository struct {
 	db *gorm.DB
 }

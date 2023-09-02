@@ -17,7 +17,7 @@ type ITaskRepository interface {
 	DeleteTask(userId uint, taskId uint) error
 }
 
-// 実装クラス
+// 構造体
 type taskRepository struct {
 	db *gorm.DB
 }

@@ -19,7 +19,7 @@ type ITaskController interface {
 	DeleteTask(c echo.Context) error
 }
 
-// 実装クラス
+// 構造体
 type taskController struct {
 	tu usecase.ITaskUsecase
 }
