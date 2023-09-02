@@ -26,7 +26,7 @@ func NewUserUsecase(ur repository.IUserRepository) IUserUsecase {
 	return &userUsecase{ur}
 }
 
-// メソッド
+// メソッド（ポインタレシーバ）
 func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 	// パスワードのハッシュ化
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
