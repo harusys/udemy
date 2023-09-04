@@ -21,3 +21,9 @@ GO_ENV=dev go run .
 ```
 GO_ENV=dev go run migrate/migrate.go
 ```
+
+# サンプルテスト実行
+
+```
+go test ./usecase/... -v -count=1
+```

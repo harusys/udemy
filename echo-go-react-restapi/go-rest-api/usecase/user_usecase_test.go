@@ -6,7 +6,6 @@ import (
 	"go-rest-api/model"
 	"go-rest-api/repository"
 	"go-rest-api/usecase"
-	"go-rest-api/validator"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -16,7 +15,6 @@ import (
 func Test_userUsecase_SignUp(t *testing.T) {
 	type fields struct {
 		ur func(*testing.T) repository.IUserRepository
-		uv validator.IUserValidator
 	}
 	type args struct {
 		user model.User
@@ -43,7 +41,6 @@ func Test_userUsecase_SignUp(t *testing.T) {
 					)
 					return mock
 				},
-				uv: validator.NewUserValidator(), // 実体を渡す（テスト対象外）
 			},
 			args: args{
 				user: model.User{
@@ -72,7 +69,6 @@ func Test_userUsecase_SignUp(t *testing.T) {
 					)
 					return mock
 				},
-				uv: validator.NewUserValidator(), // 実体を渡す（テスト対象外）
 			},
 			args: args{
 				user: model.User{
@@ -89,7 +85,7 @@ func Test_userUsecase_SignUp(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			// 準備
 			t.Parallel()
-			uu := usecase.NewUserUsecase(tt.fields.ur(t), tt.fields.uv)
+			uu := usecase.NewUserUsecase(tt.fields.ur(t))
 			// 実行
 			got, err := uu.SignUp(tt.args.user)
 			if (err != nil) != tt.wantErr {

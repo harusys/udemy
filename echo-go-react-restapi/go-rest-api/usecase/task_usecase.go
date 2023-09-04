@@ -3,7 +3,6 @@ package usecase
 import (
 	"go-rest-api/model"
 	"go-rest-api/repository"
-	"go-rest-api/validator"
 )
 
 // インターフェース
@@ -18,12 +17,11 @@ type ITaskUsecase interface {
 // 構造体
 type taskUsecase struct {
 	tr repository.ITaskRepository
-	tv validator.ITaskValidator
 }
 
 // コンストラクター（依存性の注入）
-func NewTaskUsecase(tr repository.ITaskRepository, tv validator.ITaskValidator) ITaskUsecase {
-	return &taskUsecase{tr, tv}
+func NewTaskUsecase(tr repository.ITaskRepository) ITaskUsecase {
+	return &taskUsecase{tr}
 }
 
 // メソッド（ポインタレシーバ）
@@ -64,10 +62,6 @@ func (tu *taskUsecase) GetTaskById(userId uint, taskId uint) (model.TaskResponse
 }
 
 func (tu *taskUsecase) CreateTask(task model.Task) (model.TaskResponse, error) {
-	// バリデーション
-	if err := tu.tv.TaskValidate(task); err != nil {
-		return model.TaskResponse{}, err // ゼロ値（not nil）
-	}
 	// タスクの作成
 	if err := tu.tr.CreateTask(&task); err != nil {
 		return model.TaskResponse{}, err // ゼロ値（not nil）
@@ -83,10 +77,6 @@ func (tu *taskUsecase) CreateTask(task model.Task) (model.TaskResponse, error) {
 }
 
 func (tu *taskUsecase) UpdateTask(task model.Task, userId uint, taskId uint) (model.TaskResponse, error) {
-	// バリデーション
-	if err := tu.tv.TaskValidate(task); err != nil {
-		return model.TaskResponse{}, err // ゼロ値（not nil）
-	}
 	// タスクの更新
 	if err := tu.tr.UpdateTask(&task, userId, taskId); err != nil {
 		return model.TaskResponse{}, err // ゼロ値（not nil）

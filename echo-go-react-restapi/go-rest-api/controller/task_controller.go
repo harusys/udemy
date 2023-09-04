@@ -67,6 +67,9 @@ func (tc *taskController) CreateTask(c echo.Context) error {
 	if err := c.Bind(&task); err != nil { // リクエストボディから取得
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
+	if err := c.Validate(&task); err != nil {
+		return err
+	}
 	task.UserId = uint(userId) // JWTから取得したユーザIDにセット
 	// 実行
 	taskRes, err := tc.tu.CreateTask(task)
@@ -86,6 +89,9 @@ func (tc *taskController) UpdateTask(c echo.Context) error {
 	task := model.Task{}
 	if err := c.Bind(&task); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	if err := c.Validate(&task); err != nil {
+		return err
 	}
 	// 実行
 	taskRes, err := tc.tu.UpdateTask(task, uint(userId), uint(taskId))
