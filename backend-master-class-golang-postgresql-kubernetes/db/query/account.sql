@@ -11,6 +11,12 @@ INSERT INTO accounts (
 SELECT * FROM accounts
 WHERE id = $1 LIMIT 1;
 
+-- name: GetAccountForUpdate :one
+-- デッドロック回避のため、FOR NO KEY UPDATEを付与
+SELECT * FROM accounts
+WHERE id = $1 LIMIT 1
+FOR NO KEY UPDATE;
+
 -- name: ListAccounts :many
 SELECT * FROM accounts
 ORDER BY id
@@ -20,6 +26,13 @@ OFFSET $2;
 -- name: UpdateAccount :one
 UPDATE accounts
 SET balance = $2
+WHERE id = $1
+RETURNING *;
+
+-- name: AddAccountBalance :one
+-- 変数名を balance -> amount に変更  ※$2 -> sqlc.arg(amount)
+UPDATE accounts
+SET balance = balance + sqlc.arg(amount)
 WHERE id = $1
 RETURNING *;
 
