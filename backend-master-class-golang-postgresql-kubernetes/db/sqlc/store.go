@@ -56,10 +56,10 @@ type TransferTxParams struct {
 // TransferTxResult is the result of the transfer transaction
 type TransferTxResult struct {
 	Transfer    Transfer `json:"transfer"`
-	FromEntry   Entry    `json:"from_entry"`
-	ToEntry     Entry    `json:"to_entry"`
 	FromAccount Account  `json:"from_account"`
 	ToAccount   Account  `json:"to_account"`
+	FromEntry   Entry    `json:"from_entry"`
+	ToEntry     Entry    `json:"to_entry"`
 }
 
 // var txKey = struct{}{}
@@ -152,16 +152,12 @@ func addMoney(
 		Amount: amount1,
 	})
 	if err != nil {
-		return account1, account2, err
+		return
 	}
 
 	account2, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
 		ID:     accountID2,
 		Amount: amount2,
 	})
-	if err != nil {
-		return account1, account2, err
-	}
-
-	return account1, account2, nil
+	return
 }
