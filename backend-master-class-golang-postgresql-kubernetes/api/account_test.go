@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	mockdb "simplebank/db/mock"
@@ -345,15 +344,4 @@ func randomAccount() db.Account {
 		Balance:  util.RandomMoney(),
 		Currency: util.RandomCurrency(),
 	}
-}
-
-func requireBodyMatch[T any](t *testing.T, body *bytes.Buffer, expected T) {
-	data, err := io.ReadAll(body)
-	require.NoError(t, err)
-
-	var gotValue T
-	err = json.Unmarshal(data, &gotValue)
-	require.NoError(t, err)
-
-	require.Equal(t, expected, gotValue)
 }
