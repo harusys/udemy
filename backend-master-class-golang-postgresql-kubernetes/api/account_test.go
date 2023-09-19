@@ -64,6 +64,22 @@ func TestCreateAccountAPI(t *testing.T) {
 			},
 		},
 		{
+			name: "Forbidden",
+			body: gin.H{
+				"owner":    account.Owner,
+				"currency": account.Currency,
+			},
+			buildStubs: func(store *mockdb.MockStore) {
+				store.EXPECT().
+					CreateAccount(gomock.Any(), gomock.Any()).
+					Times(1).
+					Return(db.Account{}, db.ErrForeignKeyViolation)
+			},
+			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
+				require.Equal(t, http.StatusForbidden, recorder.Code)
+			},
+		},
+		{
 			name: "InternalServerError",
 			body: gin.H{
 				"owner":    account.Owner,
