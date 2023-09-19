@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 	"database/sql"
-	"simplebank/util"
+	"simplebank/test"
 	"testing"
 	"time"
 
@@ -16,8 +16,8 @@ func createRandomAccount(t *testing.T) Account {
 	user := createRandomUser(t)
 	arg := CreateAccountParams{
 		Owner:    user.Username,
-		Balance:  util.RandomMoney(),
-		Currency: util.RandomCurrency(),
+		Balance:  test.RandomMoney(),
+		Currency: test.RandomCurrency(),
 	}
 	// Act
 	account, err := testQueries.CreateAccount(context.Background(), arg)
@@ -57,7 +57,7 @@ func TestUpdateAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 	args := UpdateAccountParams{
 		ID:      account1.ID,
-		Balance: util.RandomMoney(),
+		Balance: test.RandomMoney(),
 	}
 	// Act
 	account2, err := testQueries.UpdateAccount(context.Background(), args)

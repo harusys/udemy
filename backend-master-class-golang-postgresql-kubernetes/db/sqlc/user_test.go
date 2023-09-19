@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"simplebank/util"
+	"simplebank/test"
 	"testing"
 	"time"
 
@@ -11,13 +11,13 @@ import (
 
 func createRandomUser(t *testing.T) User {
 	// Arrange
-	hashedPassword, err := util.HashPassword(util.RandomString(6))
+	hashedPassword, err := test.HashPassword(test.RandomString(6))
 	require.NoError(t, err)
 	arg := CreateUserParams{
-		Username:       util.RandomOwner(),
+		Username:       test.RandomOwner(),
 		HashedPassword: hashedPassword,
-		Email:          util.RandomEmail(),
-		FullName:       util.RandomOwner(),
+		Email:          test.RandomEmail(),
+		FullName:       test.RandomOwner(),
 	}
 	// Act
 	user, err := testQueries.CreateUser(context.Background(), arg)

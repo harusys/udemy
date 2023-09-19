@@ -9,7 +9,7 @@ import (
 	"net/http/httptest"
 	mockdb "simplebank/db/mock"
 	db "simplebank/db/sqlc"
-	"simplebank/util"
+	"simplebank/test"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -339,9 +339,9 @@ func TestListAccountAPI(t *testing.T) {
 
 func randomAccount() db.Account {
 	return db.Account{
-		ID:       util.RandomInt(1, 1000),
-		Owner:    util.RandomOwner(),
-		Balance:  util.RandomMoney(),
-		Currency: util.RandomCurrency(),
+		ID:       test.RandomInt(1, 1000),
+		Owner:    test.RandomOwner(),
+		Balance:  test.RandomMoney(),
+		Currency: test.RandomCurrency(),
 	}
 }

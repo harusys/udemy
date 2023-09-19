@@ -1,8 +1,9 @@
-package util
+package test
 
 import (
 	"fmt"
 	"math/rand"
+	"simplebank/util"
 	"strings"
 	"time"
 )
@@ -43,7 +44,7 @@ func RandomMoney() int64 {
 
 // RandomCurrency generates a random currency code
 func RandomCurrency() string {
-	currencies := []string{EUR, USD, CAD, JPY}
+	currencies := []string{util.EUR, util.USD, util.CAD, util.JPY}
 	n := len(currencies)
 	return currencies[rand.Intn(n)]
 }

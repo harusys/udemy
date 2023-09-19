@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 	db "simplebank/db/sqlc"
-	"simplebank/util"
+	"simplebank/test"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -33,7 +33,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
-	hashedPassword, err := util.HashPassword(req.Password)
+	hashedPassword, err := test.HashPassword(req.Password)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return

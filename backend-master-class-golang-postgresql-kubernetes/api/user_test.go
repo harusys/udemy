@@ -10,7 +10,7 @@ import (
 	"reflect"
 	mockdb "simplebank/db/mock"
 	db "simplebank/db/sqlc"
-	"simplebank/util"
+	"simplebank/test"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -29,7 +29,7 @@ func (e eqCreateUserParamsMatcher) Matches(x interface{}) bool {
 	if !ok {
 		return false
 	}
-	err := util.CheckPassword(e.password, arg.HashedPassword)
+	err := test.CheckPassword(e.password, arg.HashedPassword)
 	if err != nil {
 		return false
 	}
@@ -168,15 +168,15 @@ func TestCreateUser(t *testing.T) {
 }
 
 func randomUser(t *testing.T) (user db.User, password string) {
-	password = util.RandomString(6)
-	hashedPassword, err := util.HashPassword(password)
+	password = test.RandomString(6)
+	hashedPassword, err := test.HashPassword(password)
 	require.NoError(t, err)
 
 	user = db.User{
-		Username:       util.RandomOwner(),
+		Username:       test.RandomOwner(),
 		HashedPassword: hashedPassword,
-		FullName:       util.RandomOwner(),
-		Email:          util.RandomEmail(),
+		FullName:       test.RandomOwner(),
+		Email:          test.RandomEmail(),
 	}
 	return
 }
