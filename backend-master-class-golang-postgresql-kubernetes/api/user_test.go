@@ -11,6 +11,7 @@ import (
 	mockdb "simplebank/db/mock"
 	db "simplebank/db/sqlc"
 	"simplebank/test"
+	"simplebank/util"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -29,7 +30,7 @@ func (e eqCreateUserParamsMatcher) Matches(x interface{}) bool {
 	if !ok {
 		return false
 	}
-	err := test.CheckPassword(e.password, arg.HashedPassword)
+	err := util.CheckPassword(e.password, arg.HashedPassword)
 	if err != nil {
 		return false
 	}
@@ -77,7 +78,7 @@ func TestCreateUser(t *testing.T) {
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
-				requireBodyMatch(t, recorder.Body, createUserResponse{
+				requireBodyMatch(t, recorder.Body, userResponse{
 					Username: user.Username,
 					FullName: user.FullName,
 					Email:    user.Email,
@@ -167,7 +168,7 @@ func TestCreateUser(t *testing.T) {
 			tc.buildStubs(store)
 
 			// Act
-			server := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
 			data, err := json.Marshal(tc.body)
@@ -187,7 +188,7 @@ func TestCreateUser(t *testing.T) {
 
 func randomUser(t *testing.T) (user db.User, password string) {
 	password = test.RandomString(6)
-	hashedPassword, err := test.HashPassword(password)
+	hashedPassword, err := util.HashPassword(password)
 	require.NoError(t, err)
 
 	user = db.User{

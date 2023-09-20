@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"simplebank/test"
+	"simplebank/util"
 	"testing"
 	"time"
 
@@ -11,7 +12,7 @@ import (
 
 func createRandomUser(t *testing.T) User {
 	// Arrange
-	hashedPassword, err := test.HashPassword(test.RandomString(6))
+	hashedPassword, err := util.HashPassword(test.RandomString(6))
 	require.NoError(t, err)
 	arg := CreateUserParams{
 		Username:       test.RandomOwner(),

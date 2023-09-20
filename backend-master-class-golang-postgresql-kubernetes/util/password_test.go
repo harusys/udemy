@@ -1,6 +1,7 @@
-package test
+package util
 
 import (
+	"simplebank/test"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -8,7 +9,7 @@ import (
 )
 
 func TestPassword(t *testing.T) {
-	password := RandomString(6)
+	password := test.RandomString(6)
 
 	hashedPassword1, err := HashPassword(password)
 	require.NoError(t, err)
@@ -17,7 +18,7 @@ func TestPassword(t *testing.T) {
 	err = CheckPassword(password, hashedPassword1)
 	require.NoError(t, err)
 
-	wrongPassword := RandomString(6)
+	wrongPassword := test.RandomString(6)
 	err = CheckPassword(wrongPassword, hashedPassword1)
 	require.EqualError(t, err, bcrypt.ErrMismatchedHashAndPassword.Error())
 
