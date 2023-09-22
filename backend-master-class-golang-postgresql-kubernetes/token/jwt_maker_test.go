@@ -64,4 +64,8 @@ func TestInvalidJWTTokenAlgNone(t *testing.T) {
 	require.Nil(t, payload)
 }
 
-// TODO: カバレッジ 100% にする
+func TestInvalidJWTTokenSecretKeySize(t *testing.T) {
+	maker, err := NewJWTMaker(test.RandomString(1))
+	require.Error(t, err)
+	require.Nil(t, maker)
+}

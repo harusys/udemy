@@ -46,4 +46,8 @@ func TestExpiredPasetoToken(t *testing.T) {
 	require.Nil(t, payload)
 }
 
-// TODO: カバレッジ 100% にする
+func TestInvalidPasetoTokenKeySize(t *testing.T) {
+	maker, err := NewPasetoMaker(test.RandomString(1))
+	require.Error(t, err)
+	require.Empty(t, maker)
+}

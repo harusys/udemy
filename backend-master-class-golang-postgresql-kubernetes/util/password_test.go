@@ -28,3 +28,10 @@ func TestPassword(t *testing.T) {
 	require.NotEmpty(t, hashedPassword2)
 	require.NotEqual(t, hashedPassword1, hashedPassword2)
 }
+
+func TestInvalidPassword(t *testing.T) {
+	password := test.RandomString(73)
+	hashedPassword, err := HashPassword(password)
+	require.Error(t, err)
+	require.Empty(t, hashedPassword)
+}
