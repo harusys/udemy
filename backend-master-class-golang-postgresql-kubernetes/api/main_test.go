@@ -28,6 +28,18 @@ func newTestServer(t *testing.T, store db.Store) *Server {
 	return server
 }
 
+func newTestFixedKeyServer(t *testing.T, store db.Store) *Server {
+	config := util.Config{
+		TokenSymmetricKey:   test.FixedTokenSymmetricKey(),
+		AccessTokenDuration: time.Minute,
+	}
+
+	server, err := NewServer(config, store)
+	require.NoError(t, err)
+
+	return server
+}
+
 func TestMain(m *testing.M) {
 	gin.SetMode(gin.TestMode) // テスト時のログ出力を抑制する
 	os.Exit(m.Run())
