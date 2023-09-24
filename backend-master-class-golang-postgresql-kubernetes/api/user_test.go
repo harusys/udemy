@@ -186,6 +186,10 @@ func TestCreateUser(t *testing.T) {
 	}
 }
 
+func TestLoginUser(t *testing.T) {
+	// TODO: テストケースを実装する
+}
+
 func randomUser(t *testing.T) (user db.User, password string) {
 	password = test.RandomString(6)
 	hashedPassword, err := util.HashPassword(password)
