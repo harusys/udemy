@@ -30,6 +30,11 @@ db_schema:
 sqlc:
 	sqlc generate
 
+proto:
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+    --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+    proto/*.proto
+
 mock:
 	mockgen -package mockdb -destination db/mock/store.go simplebank/db/sqlc Store
 
@@ -39,4 +44,4 @@ test:
 server:
 	go run main.go
 
-.PHONY: postgres createdb dropdb migrateup migrateup1 migratedown migratedown1 db_docs db_schema sqlc mock test server
+.PHONY: postgres createdb dropdb migrateup migrateup1 migratedown migratedown1 db_docs db_schema sqlc proto mock test server
