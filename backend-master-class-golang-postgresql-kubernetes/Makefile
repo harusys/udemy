@@ -45,4 +45,7 @@ test:
 server:
 	go run main.go
 
+evans:
+	evans --host localhost --port 9090 -r repl
+
 .PHONY: postgres createdb dropdb migrateup migrateup1 migratedown migratedown1 db_docs db_schema sqlc proto mock test server
