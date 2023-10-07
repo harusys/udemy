@@ -55,7 +55,7 @@ func validateCreateUserRequest(req *pb.CreateUserRequest) (violations []*errdeta
 	if err := ValidatePassword(req.GetPassword()); err != nil {
 		violations = append(violations, fieldViolation("password", err))
 	}
-	if err := ValidateFullname(req.GetFullName()); err != nil {
+	if err := ValidateFullName(req.GetFullName()); err != nil {
 		violations = append(violations, fieldViolation("full_name", err))
 	}
 	if err := ValidateEmail(req.GetEmail()); err != nil {
