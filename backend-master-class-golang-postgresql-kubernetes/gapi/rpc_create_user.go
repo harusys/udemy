@@ -40,7 +40,7 @@ func (server *Server) CreateUser(ctx context.Context, req *pb.CreateUserRequest)
 			}
 			opts := []asynq.Option{
 				asynq.MaxRetry(10),
-				asynq.ProcessIn(10 * time.Second), // 10秒後にプロセッサーが受け取る
+				asynq.ProcessIn(10 * time.Second), // CAUTION: To ensure that the db transaction is fully committed before the async task is picked up by the worker
 				asynq.Queue(worker.QueueCritical),
 			}
 			return server.taskDistributor.DistributeTaskSendVerifyEmail(ctx, taskPayload, opts...)
