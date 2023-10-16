@@ -107,6 +107,207 @@ func TestCreateUser(t *testing.T) {
 			},
 		},
 		{
+			name: "InvalidArgument_Username_Length",
+			req: &pb.CreateUserRequest{
+				Username: "0",
+				Password: password,
+				FullName: user.FullName,
+				Email:    user.Email,
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(0)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.InvalidArgument, st.Code())
+			},
+		},
+		{
+			name: "InvalidArgument_Username_Regex",
+			req: &pb.CreateUserRequest{
+				Username: "invalid-user#1",
+				Password: password,
+				FullName: user.FullName,
+				Email:    user.Email,
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(0)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.InvalidArgument, st.Code())
+			},
+		},
+		{
+			name: "InvalidArgument_Password",
+			req: &pb.CreateUserRequest{
+				Username: user.Username,
+				Password: "err",
+				FullName: user.FullName,
+				Email:    user.Email,
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(0)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.InvalidArgument, st.Code())
+			},
+		},
+		{
+			name: "InvalidArgument_FullName_Length",
+			req: &pb.CreateUserRequest{
+				Username: user.Username,
+				Password: password,
+				FullName: "0",
+				Email:    user.Email,
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(0)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.InvalidArgument, st.Code())
+			},
+		},
+		{
+			name: "InvalidArgument_FullName_Regex",
+			req: &pb.CreateUserRequest{
+				Username: user.Username,
+				Password: password,
+				FullName: "invalid-user#1",
+				Email:    user.Email,
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(0)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.InvalidArgument, st.Code())
+			},
+		},
+		{
+			name: "InvalidArgument_Email_Length",
+			req: &pb.CreateUserRequest{
+				Username: user.Username,
+				Password: password,
+				FullName: user.FullName,
+				Email:    "0",
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(0)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.InvalidArgument, st.Code())
+			},
+		},
+		{
+			name: "InvalidArgument_Email_Regex",
+			req: &pb.CreateUserRequest{
+				Username: user.Username,
+				Password: password,
+				FullName: user.FullName,
+				Email:    "invalid-email",
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(0)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.InvalidArgument, st.Code())
+			},
+		},
+		{
+			name: "AlreadyExists_DuplicateUsername",
+			req: &pb.CreateUserRequest{
+				Username: user.Username,
+				Password: password,
+				FullName: user.FullName,
+				Email:    user.Email,
+			},
+			buildStubs: func(store *mockdb.MockStore, taskDistributor *mockwk.MockTaskDistributor) {
+				// setting db mock
+				store.EXPECT().
+					CreateUserTx(gomock.Any(), gomock.Any()).
+					Times(1).
+					Return(db.CreateUserTxResult{}, db.ErrUniqueViolation)
+				// setting redis mock
+				taskDistributor.EXPECT().
+					DistributeTaskSendVerifyEmail(gomock.Any(), gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			checkResponse: func(t *testing.T, res *pb.CreateUserResponse, err error) {
+				require.Error(t, err)
+				st, ok := status.FromError(err)
+				require.True(t, ok)
+				require.Equal(t, codes.AlreadyExists, st.Code())
+			},
+		},
+		{
 			name: "InternalError",
 			req: &pb.CreateUserRequest{
 				Username: user.Username,
