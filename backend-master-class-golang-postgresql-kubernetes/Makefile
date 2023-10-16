@@ -44,6 +44,7 @@ proto:
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go simplebank/db/sqlc Store
+	mockgen -package mockwk -destination worker/mock/distributor.go simplebank/worker TaskDistributor
 
 test:
 	go test -v -cover ./...
