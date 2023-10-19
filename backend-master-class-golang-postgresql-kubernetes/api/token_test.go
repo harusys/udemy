@@ -91,7 +91,7 @@ func TestRenewAccessToken(t *testing.T) {
 				store.EXPECT().
 					GetSession(gomock.Any(), gomock.Any()).
 					Times(1).
-					Return(db.Session{}, sql.ErrNoRows)
+					Return(db.Session{}, db.ErrRecordNotFound)
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusNotFound, recorder.Code)

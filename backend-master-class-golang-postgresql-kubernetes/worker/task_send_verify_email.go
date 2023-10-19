@@ -49,7 +49,7 @@ func (processor *RedisTaskProcessor) ProcessorTaskSendVerifyEmail(ctx context.Co
 	user, err := processor.store.GetUser(ctx, payload.Username)
 	if err != nil {
 		// CAUTION: To retry if worker get an asynq task before the db insert is finished
-		// if err == sql.ErrNoRows {
+		// if errors.Is(err, db.ErrRecordNotFound) {
 		// 	return fmt.Errorf("user doesn't exist: %w", asynq.SkipRetry)
 		// }
 		return fmt.Errorf("failed to get user: %w", err)

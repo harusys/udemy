@@ -2,12 +2,12 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"simplebank/test"
 	"simplebank/util"
 	"testing"
 	"time"
 
+	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/stretchr/testify/require"
 )
 
@@ -22,7 +22,7 @@ func createRandomUser(t *testing.T) User {
 		FullName:       test.RandomOwner(),
 	}
 	// Act
-	user, err := testQueries.CreateUser(context.Background(), arg)
+	user, err := testStore.CreateUser(context.Background(), arg)
 	// Assert
 	require.NoError(t, err)
 	require.NotEmpty(t, user)
@@ -44,7 +44,7 @@ func TestGetUser(t *testing.T) {
 	// Arrange
 	user1 := createRandomUser(t)
 	// Act
-	user2, err := testQueries.GetUser(context.Background(), user1.Username)
+	user2, err := testStore.GetUser(context.Background(), user1.Username)
 	// Assert
 	require.NoError(t, err)
 	require.NotEmpty(t, user2)
@@ -61,9 +61,9 @@ func TestUpdateUserOnlyFullName(t *testing.T) {
 	oldUser := createRandomUser(t)
 	newFullName := test.RandomOwner()
 	// Act
-	updateUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
+	updateUser, err := testStore.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		FullName: sql.NullString{
+		FullName: pgtype.Text{
 			String: newFullName,
 			Valid:  true,
 		},
@@ -81,9 +81,9 @@ func TestUpdateUserOnlyEmail(t *testing.T) {
 	oldUser := createRandomUser(t)
 	newEmail := test.RandomEmail()
 	// Act
-	updateUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
+	updateUser, err := testStore.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		Email: sql.NullString{
+		Email: pgtype.Text{
 			String: newEmail,
 			Valid:  true,
 		},
@@ -103,9 +103,9 @@ func TestUpdateUserOnlyPassword(t *testing.T) {
 	newHashedPassword, err := util.HashPassword(newPassword)
 	require.NoError(t, err)
 	// Act
-	updateUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
+	updateUser, err := testStore.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		HashedPassword: sql.NullString{
+		HashedPassword: pgtype.Text{
 			String: newHashedPassword,
 			Valid:  true,
 		},
@@ -127,17 +127,17 @@ func TestUpdateUserAllFields(t *testing.T) {
 	newHashedPassword, err := util.HashPassword(newPassword)
 	require.NoError(t, err)
 	// Act
-	updateUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
+	updateUser, err := testStore.UpdateUser(context.Background(), UpdateUserParams{
 		Username: oldUser.Username,
-		FullName: sql.NullString{
+		FullName: pgtype.Text{
 			String: newFullName,
 			Valid:  true,
 		},
-		Email: sql.NullString{
+		Email: pgtype.Text{
 			String: newEmail,
 			Valid:  true,
 		},
-		HashedPassword: sql.NullString{
+		HashedPassword: pgtype.Text{
 			String: newHashedPassword,
 			Valid:  true,
 		},

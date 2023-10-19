@@ -95,7 +95,7 @@ func TestLoginUser(t *testing.T) {
 				store.EXPECT().
 					GetUser(gomock.Any(), gomock.Eq(user.Username)).
 					Times(1).
-					Return(db.User{}, sql.ErrNoRows)
+					Return(db.User{}, db.ErrRecordNotFound)
 				store.EXPECT().
 					CreateSession(gomock.Any(), gomock.Any()).
 					Times(0)

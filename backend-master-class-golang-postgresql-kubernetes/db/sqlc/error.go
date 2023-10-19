@@ -3,6 +3,7 @@ package db
 import (
 	"errors"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/lib/pq"
 )
 
@@ -11,6 +12,8 @@ const (
 	ForeignKeyViolation = "23503"
 	UniqueViolation     = "23505"
 )
+
+var ErrRecordNotFound = pgx.ErrNoRows
 
 var ErrForeignKeyViolation = &pq.Error{
 	Code: ForeignKeyViolation,
